@@ -5,9 +5,10 @@ from experiment_params import *
 
 def cross_entropy_method(t_max, sigma=1.0):
     # Initialize parameters
-    num_samples = 10
-    elite_ratio = 0.2
-    num_elite = int(num_samples * elite_ratio)
+    num_samples = m
+    # elite_ratio = 0.25
+    # num_elite = int(num_samples * elite_ratio)
+    num_elite = k
     mean = np.array([0] * num_neurons)
     cov = np.eye(num_neurons)
 
@@ -18,7 +19,7 @@ def cross_entropy_method(t_max, sigma=1.0):
         samples = np.random.multivariate_normal(mean, cov, num_samples)
 
         print("Generation: ", t)
-        print(samples)
+        # print(samples)
 
         # Evaluate objective function and constraints
         scores = []
@@ -26,7 +27,7 @@ def cross_entropy_method(t_max, sigma=1.0):
             stim_pattern = x * b2.nA
             statemon, spikemon, ratemon = stimulate(synapse_w, stim_pattern)
             scores.append(f(np.array(spikemon.count), target_pattern))
-            print(np.array(spikemon.count), target_pattern, f(np.array(spikemon.count), target_pattern))
+            # print(np.array(spikemon.count), target_pattern, f(np.array(spikemon.count), target_pattern))
   
         # Update probability distribution based on best solutions
         elite_indices = np.argsort(scores)[:num_elite]

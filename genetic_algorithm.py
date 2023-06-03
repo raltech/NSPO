@@ -9,11 +9,11 @@ def genetic_algorithm(t_max, m, k, crossover_rate, mutation_rate, sigma):
     score_history = []
     for t in range(t_max):
         print("Generation: ", t)
-        print(population)
+        # print(population)
         parents, done, values = truncate_selection(target_pattern, population, k)
         score_history.append(np.mean(values))
-        if done:
-            return parents[0], score_history
+        # if done:
+        #     return parents[0], score_history
 
         population = []
         while len(population) < m:
@@ -26,9 +26,9 @@ def genetic_algorithm(t_max, m, k, crossover_rate, mutation_rate, sigma):
                 child = gaussian_mutate(child, mutation_rate, sigma)
                 population.append(child)
         population = np.array(population)
-    best, done, values = truncate_selection(target_pattern, population, 1) 
+    best, done, values = truncate_selection(target_pattern, population, 1)
     score_history.append(np.mean(values))
-    return best, score_history
+    return best[0], score_history
 
 # select top k individuals
 def truncate_selection(target_pattern, population, k):
@@ -38,7 +38,7 @@ def truncate_selection(target_pattern, population, k):
         stim_pattern = individual * b2.nA
         statemon, spikemon, ratemon = stimulate(synapse_w, stim_pattern)
         values.append(f(np.array(spikemon.count), target_pattern))
-        print(np.array(spikemon.count), target_pattern, f(np.array(spikemon.count), target_pattern))
+        # print(np.array(spikemon.count), target_pattern, f(np.array(spikemon.count), target_pattern))
     combined = list(zip(values, population))
     # import pdb; pdb.set_trace()
     sorted_combined = sorted(combined, key=lambda x: x[0])
